@@ -8,7 +8,7 @@ of each statement.
 **[read it in this repository](blueprint/README.md)**, where each Lean name links to its
 definition.
 
-*Relational Algebras for Subset Selection and Optimisation: Formalised in Lean*, by David R. Pratten and Luke Mathieson. Draft v0.1.3, 23 November 2026.
+*Relational Algebras for Subset Selection and Optimisation: Formalised in Lean*, by David R. Pratten and Luke Mathieson. Draft v0.1.4, 23 November 2026.
 
 ## Abstract
 
@@ -48,8 +48,7 @@ library to your `lakefile.toml`:
     rev = "v0.1.3"
 
 Run `lake update` to fetch it. Then `import Rasso`, and `import ConstraintDB` or
-`import Coddstheorem` for those results. `rev` pins this release's tag. A later tag gives
-a later version.
+`import Coddstheorem` for those results. `rev` pins the latest release, v0.1.3; `main` may be newer. A later tag gives a later version.
 
 ## Licence
 
@@ -59,7 +58,7 @@ file). The report's text, the PDF and everything in `blueprint/`, is under
 
 ## Citing
 
-[`CITATION.cff`](CITATION.cff) says how to cite the report. For the ideas of
+[`CITATION.cff`](CITATION.cff) says how to cite the report. Its DOI, [10.5281/zenodo.24461259](https://doi.org/10.5281/zenodo.24461259), names every version. For the ideas of
 Rasso, cite the paper: D. R. Pratten, F. Ramezani, L. Mathieson. Relational algebras for subset selection and optimisation. arXiv:2509.06439v1 [cs.DB], 8 September 2025.
 
 ## This repository is generated
