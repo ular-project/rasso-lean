@@ -1,0 +1,40 @@
+-- Facility location: choose which sites to open, and give each customer one site,
+-- minimising opening plus assignment cost.  Two output relations decided together:
+-- a multi solution set of two members.
+--
+-- The universe is total: Open gives every site isOpen, so the open sites are
+-- pi[site](sigma[isOpen = 1](Open)); Assign gives every customer exactly one site.
+
+WITH
+  Sites AS (SELECT * FROM D.Sites),
+  Customers AS (SELECT * FROM D.Customers),
+  AssignCost AS (SELECT * FROM D.AssignCost),
+
+  Open AS (SOLUTIONSET (Sites, RELATION (isOpen 0..1))),
+  Assign AS (
+      SOLUTIONSET (Customers, RELATION (site IN (SELECT site FROM Sites)))
+  ),
+
+  -- the members, decided together; every site used is open: the join on site, which
+  -- Assign decides
+  Plan AS (
+      MSOLUTIONSET (Open Open, Assign Assign)
+          WHERE (SELECT bool_and(isOpen = 1) FROM Assign NATURAL JOIN Open)
+  ),
+
+  -- the cheapest plan
+  Best AS (
+      SELECT *
+      FROM Plan
+      ORDER BY (
+              SELECT sum(o + a)
+              FROM (SELECT sum(openCost * isOpen) AS o FROM Open)
+                  NATURAL JOIN (
+                      SELECT sum(cost) AS a FROM Assign NATURAL JOIN AssignCost
+                  )
+          )
+      LIMIT 1
+  ),
+
+  Assignment AS (SELECT * FROM Best.Assign ORDER BY c)
+SELECT * FROM Assignment

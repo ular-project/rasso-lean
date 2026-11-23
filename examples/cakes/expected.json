@@ -1,0 +1,7 @@
+{
+  "kind": "relation",
+  "columns": ["cake", "qty"],
+  "rows": [["Banana", 2], ["Chocolate", 2]],
+  "objective": 1700,
+  "count": 12
+}

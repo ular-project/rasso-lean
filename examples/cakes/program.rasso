@@ -1,0 +1,28 @@
+-- Cakes: the production example from Section 6, Figure 6.
+-- Choose a batch quantity for each cake so no ingredient is overused,
+-- and maximise profit.
+
+Cakes := db_ref[Cakes](D)
+Recipe := db_ref[Recipe](D)
+Inventory := db_ref[Inventory](D)
+
+Qty := omega[qty 0..100]
+B := omega_sol(Cakes, Qty)
+
+-- every ingredient's usage within what is available
+MakableBatches := sigma_sol[
+    gamma[][bool_and(ret) -> ret](
+        gamma[ingredient, avail][sum(qty * amount) <= avail -> ret](
+            B join Recipe join Inventory
+        )
+    )](B)
+
+-- the most profitable batch
+ProfitableBatch := enum_sol[1, desc, gamma[][sum(qty * price)](MakableBatches)](
+    MakableBatches
+)
+
+-- the batch, by cake: pi after enum, as SQL's ORDER BY reads it
+LetsMakeBatch := pi[cake, price, qty](
+    enum[all, asc, cake](forget(flatten[](ProfitableBatch)))
+)

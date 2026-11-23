@@ -1,0 +1,31 @@
+-- SAT: is a formula in conjunctive normal form satisfiable?  The formula is data: its
+-- variables, its clauses, and where each variable occurs positively (P) or negatively
+-- (N).  One relation is guessed, the truth assignment T, so a solution set is enough.
+
+WITH
+  Vars AS (SELECT * FROM D.Vars),
+  Clauses AS (SELECT * FROM D.Clauses),
+  P AS (SELECT * FROM D.P),
+  N AS (SELECT * FROM D.N),
+
+  -- the literals: an occurrence of a variable in a clause, with its sign
+  Lit AS (SELECT *, TRUE AS sign FROM P UNION SELECT *, FALSE AS sign FROM N),
+
+  -- every truth assignment: each variable true or false
+  T AS (SOLUTIONSET (Vars, RELATION (b BOOL))),
+
+  -- every clause has a literal that the assignment makes true
+  Satisfying AS (
+      SELECT *
+      FROM T
+      WHERE ALL (
+              SELECT bool_or(b = sign) AS ok FROM T NATURAL JOIN Lit GROUP BY c
+          )
+  ),
+
+  -- the satisfying assignments, numbered r, and how many there are
+  Solutions AS (
+      SELECT *, candRank() AS r FROM (SELECT * FROM Satisfying LIMIT ALL)
+  ),
+  Count AS (SELECT count(r) AS n FROM (SELECT r FROM Solutions) LIMIT ALL)
+SELECT * FROM Count

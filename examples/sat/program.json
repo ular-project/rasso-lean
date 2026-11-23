@@ -1,0 +1,348 @@
+{
+  "program": [
+    {
+      "define": {
+        "expr": {
+          "omega": {
+            "heading": [
+              {
+                "column": {
+                  "attr": "v",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "symbol": "x1"
+                }
+              ],
+              [
+                {
+                  "symbol": "x2"
+                }
+              ],
+              [
+                {
+                  "symbol": "x3"
+                }
+              ]
+            ]
+          }
+        },
+        "line": 1,
+        "name": "Vars"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "omega": {
+            "heading": [
+              {
+                "column": {
+                  "attr": "c",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "symbol": "c1"
+                }
+              ],
+              [
+                {
+                  "symbol": "c2"
+                }
+              ]
+            ]
+          }
+        },
+        "line": 2,
+        "name": "Clauses"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "omega": {
+            "heading": [
+              {
+                "column": {
+                  "attr": "v",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              },
+              {
+                "column": {
+                  "attr": "c",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "symbol": "x1"
+                },
+                {
+                  "symbol": "c1"
+                }
+              ],
+              [
+                {
+                  "symbol": "x2"
+                },
+                {
+                  "symbol": "c2"
+                }
+              ]
+            ]
+          }
+        },
+        "line": 3,
+        "name": "P"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "omega": {
+            "heading": [
+              {
+                "column": {
+                  "attr": "v",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              },
+              {
+                "column": {
+                  "attr": "c",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "symbol": "x3"
+                },
+                {
+                  "symbol": "c2"
+                }
+              ]
+            ]
+          }
+        },
+        "line": 4,
+        "name": "N"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "union": {
+            "operands": [
+              {
+                "extend": {
+                  "as": "sign",
+                  "of": {
+                    "name": "P"
+                  },
+                  "term": {
+                    "bool": true
+                  }
+                }
+              },
+              {
+                "extend": {
+                  "as": "sign",
+                  "of": {
+                    "name": "N"
+                  },
+                  "term": {
+                    "bool": false
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "line": 5,
+        "name": "Lit"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "omega_sol": {
+            "data": {
+              "name": "Vars"
+            },
+            "decision": {
+              "omega": {
+                "heading": [
+                  {
+                    "column": {
+                      "attr": "b",
+                      "domain": {
+                        "type": "bool"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "line": 6,
+        "name": "T"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "sigma_sol": {
+            "condition": {
+              "gamma": {
+                "aggregate": {
+                  "agg": {
+                    "of": {
+                      "attr": "ok"
+                    },
+                    "op": "bool_and"
+                  }
+                },
+                "as": "ok",
+                "by": [],
+                "of": {
+                  "gamma": {
+                    "aggregate": {
+                      "agg": {
+                        "of": {
+                          "call": {
+                            "args": [
+                              {
+                                "attr": "b"
+                              },
+                              {
+                                "attr": "sign"
+                              }
+                            ],
+                            "op": "="
+                          }
+                        },
+                        "op": "bool_or"
+                      }
+                    },
+                    "as": "ok",
+                    "by": [
+                      "c"
+                    ],
+                    "of": {
+                      "join": {
+                        "operands": [
+                          {
+                            "name": "T"
+                          },
+                          {
+                            "name": "Lit"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "of": {
+              "name": "T"
+            }
+          }
+        },
+        "line": 7,
+        "name": "Satisfying"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "forget": {
+            "of": {
+              "flatten": {
+                "of": {
+                  "enum_sol": {
+                    "count": {
+                      "all": {}
+                    },
+                    "of": {
+                      "name": "Satisfying"
+                    }
+                  }
+                },
+                "rank": {
+                  "attr": "r"
+                }
+              }
+            }
+          }
+        },
+        "line": 11,
+        "name": "Solutions"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "enum": {
+            "count": {
+              "all": {}
+            },
+            "of": {
+              "gamma": {
+                "aggregate": {
+                  "agg": {
+                    "of": {
+                      "attr": "r"
+                    },
+                    "op": "count"
+                  }
+                },
+                "as": "n",
+                "by": [],
+                "of": {
+                  "pi": {
+                    "attrs": [
+                      "r"
+                    ],
+                    "of": {
+                      "name": "Solutions"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "line": 12,
+        "name": "Count"
+      }
+    }
+  ],
+  "rasso": "1"
+}

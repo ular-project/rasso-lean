@@ -1,0 +1,30 @@
+-- Facility location: choose which sites to open, and give each customer one site,
+-- minimising opening plus assignment cost.  Two output relations decided together:
+-- a multi solution set of two members.
+--
+-- The universe is total: Open gives every site isOpen, so the open sites are
+-- pi[site](sigma[isOpen = 1](Open)); Assign gives every customer exactly one site.
+
+Sites := db_ref[Sites](D)
+Customers := db_ref[Customers](D)
+AssignCost := db_ref[AssignCost](D)
+
+Open := omega_sol(Sites, omega[isOpen 0..1])
+Assign := omega_sol(Customers, omega[site in pi[site](Sites)])
+
+-- the members, decided together; every site used is open: the join on site, which
+-- Assign decides
+Plan := omega_msol[Open Open, Assign Assign](
+    gamma[][bool_and(isOpen = 1)](Assign join Open)
+)
+
+-- the cheapest plan
+Best := enum_msol[
+    1,
+    asc,
+    gamma[][sum(o + a)](
+        gamma[][sum(openCost * isOpen) -> o](Open)
+            join gamma[][sum(cost) -> a](Assign join AssignCost)
+    )](Plan)
+
+Assignment := enum[all, asc, c](db_ref[Assign](flatten_msol[](Best)))

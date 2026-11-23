@@ -1,0 +1,444 @@
+{
+  "program": [
+    {
+      "define": {
+        "expr": {
+          "omega": {
+            "heading": [
+              {
+                "column": {
+                  "attr": "site",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              },
+              {
+                "column": {
+                  "attr": "openCost",
+                  "domain": {
+                    "type": "int"
+                  }
+                }
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "symbol": "s1"
+                },
+                {
+                  "int": 5
+                }
+              ],
+              [
+                {
+                  "symbol": "s2"
+                },
+                {
+                  "int": 3
+                }
+              ]
+            ]
+          }
+        },
+        "name": "Sites"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "omega": {
+            "heading": [
+              {
+                "column": {
+                  "attr": "c",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "symbol": "c1"
+                }
+              ],
+              [
+                {
+                  "symbol": "c2"
+                }
+              ],
+              [
+                {
+                  "symbol": "c3"
+                }
+              ]
+            ]
+          }
+        },
+        "name": "Customers"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "omega": {
+            "heading": [
+              {
+                "column": {
+                  "attr": "c",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              },
+              {
+                "column": {
+                  "attr": "site",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              },
+              {
+                "column": {
+                  "attr": "cost",
+                  "domain": {
+                    "type": "int"
+                  }
+                }
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "symbol": "c1"
+                },
+                {
+                  "symbol": "s1"
+                },
+                {
+                  "int": 1
+                }
+              ],
+              [
+                {
+                  "symbol": "c1"
+                },
+                {
+                  "symbol": "s2"
+                },
+                {
+                  "int": 4
+                }
+              ],
+              [
+                {
+                  "symbol": "c2"
+                },
+                {
+                  "symbol": "s1"
+                },
+                {
+                  "int": 2
+                }
+              ],
+              [
+                {
+                  "symbol": "c2"
+                },
+                {
+                  "symbol": "s2"
+                },
+                {
+                  "int": 2
+                }
+              ],
+              [
+                {
+                  "symbol": "c3"
+                },
+                {
+                  "symbol": "s1"
+                },
+                {
+                  "int": 4
+                }
+              ],
+              [
+                {
+                  "symbol": "c3"
+                },
+                {
+                  "symbol": "s2"
+                },
+                {
+                  "int": 1
+                }
+              ]
+            ]
+          }
+        },
+        "name": "AssignCost"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "omega_sol": {
+            "data": {
+              "name": "Sites"
+            },
+            "decision": {
+              "omega": {
+                "heading": [
+                  {
+                    "column": {
+                      "attr": "isOpen",
+                      "domain": {
+                        "range": {
+                          "hi": 1,
+                          "lo": 0
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "name": "Open"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "omega_sol": {
+            "data": {
+              "name": "Customers"
+            },
+            "decision": {
+              "omega": {
+                "heading": [
+                  {
+                    "column": {
+                      "attr": "site",
+                      "domain": {
+                        "in": {
+                          "pi": {
+                            "attrs": [
+                              "site"
+                            ],
+                            "of": {
+                              "name": "Sites"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "name": "Assign"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "omega_msol": {
+            "condition": {
+              "gamma": {
+                "aggregate": {
+                  "agg": {
+                    "of": {
+                      "call": {
+                        "args": [
+                          {
+                            "attr": "isOpen"
+                          },
+                          {
+                            "int": 1
+                          }
+                        ],
+                        "op": "="
+                      }
+                    },
+                    "op": "bool_and"
+                  }
+                },
+                "by": [],
+                "of": {
+                  "join": {
+                    "operands": [
+                      {
+                        "name": "Assign"
+                      },
+                      {
+                        "name": "Open"
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "members": [
+              {
+                "member": {
+                  "expr": {
+                    "name": "Open"
+                  },
+                  "name": "Open"
+                }
+              },
+              {
+                "member": {
+                  "expr": {
+                    "name": "Assign"
+                  },
+                  "name": "Assign"
+                }
+              }
+            ]
+          }
+        },
+        "name": "Plan"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "enum_msol": {
+            "count": {
+              "int": 1
+            },
+            "key": {
+              "gamma": {
+                "aggregate": {
+                  "agg": {
+                    "of": {
+                      "call": {
+                        "args": [
+                          {
+                            "attr": "o"
+                          },
+                          {
+                            "attr": "a"
+                          }
+                        ],
+                        "op": "+"
+                      }
+                    },
+                    "op": "sum"
+                  }
+                },
+                "by": [],
+                "of": {
+                  "join": {
+                    "operands": [
+                      {
+                        "gamma": {
+                          "aggregate": {
+                            "agg": {
+                              "of": {
+                                "call": {
+                                  "args": [
+                                    {
+                                      "attr": "openCost"
+                                    },
+                                    {
+                                      "attr": "isOpen"
+                                    }
+                                  ],
+                                  "op": "*"
+                                }
+                              },
+                              "op": "sum"
+                            }
+                          },
+                          "as": "o",
+                          "by": [],
+                          "of": {
+                            "name": "Open"
+                          }
+                        }
+                      },
+                      {
+                        "gamma": {
+                          "aggregate": {
+                            "agg": {
+                              "of": {
+                                "attr": "cost"
+                              },
+                              "op": "sum"
+                            }
+                          },
+                          "as": "a",
+                          "by": [],
+                          "of": {
+                            "join": {
+                              "operands": [
+                                {
+                                  "name": "Assign"
+                                },
+                                {
+                                  "name": "AssignCost"
+                                }
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              }
+            },
+            "of": {
+              "name": "Plan"
+            },
+            "order": "asc"
+          }
+        },
+        "name": "Best"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "enum": {
+            "count": {
+              "all": {}
+            },
+            "key": {
+              "attr": "c"
+            },
+            "of": {
+              "db_ref": {
+                "of": {
+                  "flatten_msol": {
+                    "of": {
+                      "name": "Best"
+                    },
+                    "rank": {
+                      "none": {}
+                    }
+                  }
+                },
+                "relation": "Assign"
+              }
+            },
+            "order": "asc"
+          }
+        },
+        "name": "Assignment"
+      }
+    }
+  ],
+  "rasso": "1"
+}
