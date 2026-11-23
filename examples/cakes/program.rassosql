@@ -1,0 +1,34 @@
+-- Cakes: the production example from Section 6, Figure 6, in polymorphic SQL.
+-- Choose a batch quantity for each cake so no ingredient is overused,
+-- and maximise profit.
+
+WITH
+  Cakes AS (SELECT * FROM D.Cakes),
+  Recipe AS (SELECT * FROM D.Recipe),
+  Inventory AS (SELECT * FROM D.Inventory),
+
+  Qty AS (RELATION (qty 0..100)),
+  B AS (SOLUTIONSET (Cakes, Qty)),
+
+  -- every ingredient's usage within what is available
+  MakableBatches AS (
+      SELECT *
+      FROM B
+      WHERE ALL (
+              SELECT sum(qty * amount) <= avail AS ret
+              FROM B NATURAL JOIN Recipe NATURAL JOIN Inventory
+              GROUP BY ingredient, avail
+          )
+  ),
+
+  -- the most profitable batch
+  ProfitableBatch AS (
+      SELECT *
+      FROM MakableBatches
+      ORDER BY (SELECT sum(qty * price) FROM MakableBatches) DESC
+      LIMIT 1
+  ),
+
+  -- the batch, by cake
+  LetsMakeBatch AS (SELECT cake, price, qty FROM ProfitableBatch ORDER BY cake)
+SELECT * FROM LetsMakeBatch

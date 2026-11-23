@@ -1,0 +1,24 @@
+name = "rasso-lean"
+version = "0.1.3"
+license = "Apache-2.0"
+defaultTargets = ["Rasso", "ConstraintDB", "Coddstheorem", "rasso-lean"]
+
+# Core Lean only: no Mathlib or other dependencies.
+
+[[lean_lib]]
+name = "Rasso"
+
+# Constraint relations and the Goldin–Kanellakis algebra, compared with Rasso.
+[[lean_lib]]
+name = "ConstraintDB"
+
+# Codd's theorem for Rasso's finite relations.
+[[lean_lib]]
+name = "Coddstheorem"
+# The library and its axiom report, Coddstheorem/Test/Axioms.lean, which the root does
+# not import, so that a project using the library does not print it.
+globs = ["Coddstheorem.*"]
+
+[[lean_exe]]
+name = "rasso-lean"
+root = "Rasso.Main"

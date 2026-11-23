@@ -1,0 +1,35 @@
+# The release's checks (tools/check.sh): the build, the axiom audit, the examples, the
+# Markdown blueprint and one version. This repository is generated, and every change
+# arrives as a pull request, so the checks run on pull requests. They also run on main
+# once a week, to catch drift outside the repository (an action withdrawn, the toolchain's
+# download moved), and by hand (workflow_dispatch).
+name: Check
+
+on:
+  pull_request:
+  schedule:
+    - cron: "17 3 * * 1"  # Mondays, 03:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      # Installs elan and the toolchain in lean-toolchain only. tools/check.sh builds,
+      # with no cache: each run builds from nothing, as a reader does.
+      - uses: leanprover/lean-action@fe408643ea7367d8c0404a8be3975bb145f5fb64  # v1.7.0
+        with:
+          auto-config: false
+          build: false
+          use-github-cache: false
+          use-mathlib-cache: false
+      - run: bash tools/check.sh

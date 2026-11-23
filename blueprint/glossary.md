@@ -1,0 +1,118 @@
+<a id="chap-r2-glossary"></a>
+# 15 Glossary
+
+Each word has one meaning in this technical report. Where a word names a concept that the Lean definitions or the Racket implementation name, the names follow in brackets, with the Rasso paper’s word where it differs. The two implementations share these names, by the rule of Section [15.1](#sec-r2-names).
+
+**assignment.** Said of two things. In the logic, a map from first-order variables to values. For $`\Phi`$, values for the cells, a tuple over them.
+
+**attribute.** A name in a heading.
+
+**candidate.** One element of a solution set: the graph of a function from the data to the decision. In a multi-solution set: a database with one candidate for each member. \[Lean: `Sol.candidates`, `Msol.candidates`.\]
+
+**cell.** A variable that $`\Phi`$ gives to one pair of a data tuple and a decision attribute. Its domain is the attribute’s domain.
+
+**class.** Said of two things. For projection, a rule that accepts an unrestricted relation and an attribute, by the attribute’s domain and the comparisons that mention it, and gives a term without the attribute: finite domains, dense order, equality, or linear arithmetic. For closure, the set of unrestricted relations whose domains and term all fall within one of these four. Not to be confused with a *constraint class*.
+
+**closed.** A class is closed under an operator when the operator, applied to relations in the class, gives a relation in the class whenever it gives a result; for $`\sigma`$, with a term of the class.
+
+**characteristic function.** The Boolean term of an unrestricted relation.
+
+**condition.** A test of a candidate: a relational expression over the candidate whose value has one attribute and one tuple, a Boolean; `has_subset`$`(R)`$; or conditions combined with `∧`, `∨` and `¬`. The candidate is a solution set’s, a relation, or a multi-solution set’s, a database whose members are named. It is true of a candidate when it gives `true`, and it can refuse. \[Lean: `Cond`. Racket: `condition`. Paper: $`\theta`$.\]
+
+**constraint class.** In a constraint database, the one fixed set of constraints that its generalized tuples use (Kanellakis, Kuper and Revesz).
+
+**constraint database.** A database whose relations are given by formulas over constraints (Kanellakis, Kuper and Revesz).
+
+**covers exactly.** An assignment covers exactly the cells when it gives values to the cells and to nothing else.
+
+**data.** The finite relation whose tuples are the arguments of a solution set’s candidates. \[Lean: `Sol.data`. Racket: `sol-data`. Paper: base.\]
+
+**database.** A finite map from names to finite relations. \[Lean: `Db`. Racket: `database`.\]
+
+**decision.** The unrestricted relation into which a solution set’s candidates map the data: each candidate gives each data tuple one tuple of the decision. \[Lean: `Sol.decision` gives its heading. Racket: `sol-decision`.\]
+
+**domain.** A set of values: a kind, a range of integers, or a finite set. \[Lean: `Domain`, as written `DomExpr`. Racket: a finite set is `(set v …)`.\]
+
+**enumeration.** $`\mathcal{E}`$: the operator that lists tuples, candidates or databases as a sequence, at most a count, in the order of a key. \[Lean: `enum`, `enumSol`, `enumMsol`. Racket: `enum`, `enum-sol`, `enum-msol`.\]
+
+**expression.** What a statement names: a form whose value is a relation of either kind, a sequence, a solution set, a multi-solution set or a database. \[Lean: `Expr`. Racket: the shape kind `expr`.\]
+
+**finite relation.** Over a heading that names no attribute twice: the empty relation, or a finite relation with a tuple that fits the heading adjoined. So, a finite set of tuples, each fitting the heading. \[Lean: `Finrel`, whose well-formed values are exactly these (Theorem [6.10](finite.md#thm-r2-built)). Racket: `finrel`, with operations `fr-…`. Paper: active domain relation.\]
+
+**fits.** A tuple fits a heading when it has exactly the heading’s attributes, and each value is in its attribute’s domain. \[Lean: `Tuple.Fits`.\]
+
+**flat relation.** The unrestricted relation that $`\Phi`$ gives: its attributes are the cells, its characteristic function is the term.
+
+**generalized relation.** In a constraint database, a disjunction of conjunctions of constraints from one fixed class. Kanellakis, Kuper and Revesz fix this syntax so that projection, by quantifier elimination, can always be done. Rasso’s unrestricted relation allows any Boolean term; where Rasso follows them, in projection, it recognises a class of the same kind and brings the term into the same form (Chapter [8](cdb.md)).
+
+**guess.** A finite list of tuples for each second-order variable.
+
+**selection on Boolean function spaces.** The Boolean selection statements (Definition [12.7](eso.md#def-r2-eso-boolsel)): multi-solution sets whose members are Boolean function spaces $`\mathbb {B}^{U^k}`$, selected by a condition of Codd’s algebra. Up to equal value, they are the subalgebra generated by those spaces under product and selection. On well-formed structures whose universe is unmixed, their programs state exactly the existential second-order properties.
+
+**heading.** A list of attributes, each with a domain, with no attribute twice. \[Lean: `Heading`, which admits a repeat.\]
+
+**holds.** An unrestricted relation holds a tuple when the tuple fits its heading and its term is `true` on the tuple.
+
+**key.** The term, or the relational expression, that orders an enumeration.
+
+**kind.** One of Boolean, integer, rational, symbol, string, float. \[Lean: `Kind`. rassoAST: `"type"`.\]
+
+**linear term.** A term built by $`+`$, $`-`$ and $`\times`$ from exact numbers and number attributes, with at most one factor that is not a constant in each product.
+
+**member.** A named solution set in a multi-solution set.
+
+**multi-solution set.** Solution sets decided together, with a condition across them. \[Lean: `Msol`. Racket: `msol`.\]
+
+**Rasso.** The algebras and the language that writes them, and only these. It has more than one implementation.
+
+**rassoAST.** The abstract syntax tree of Rasso, in JSON: what the surface languages are translated to and from, and what the implementations read and write.
+
+**RassoLean.** The Lean library of this report: the definitions, the proofs and the evaluator. Its declarations are in the namespace `Rasso`.
+
+**`rasso-lean`.** RassoLean’s executable, which runs a Rasso program written as rassoAST with RassoLean’s evaluator.
+
+**recogniser.** The function that finds, for an attribute that projection removes, the first class that accepts it.
+
+**refuse.** To give no value: evaluation stops with a message. A refusal is not an empty result, which is a value. An operator refuses operands that do not fit it, and a term can refuse on a tuple (see *total*). \[Lean: an `Except` error.\]
+
+**respects.** An assignment respects the cells when it gives each cell a value in the cell’s domain.
+
+**sequence.** A list with no item twice: of tuples, of candidates, or of databases. \[Lean and Racket: `tseq`, `cseq`, `dbseq`.\]
+
+**sentence.** An existential second-order sentence: second-order variables with arities, and a first-order formula with no free first-order variables.
+
+**slice.** For the join of solution sets: the restriction of a candidate of the join to the tuples that agree on one value of the data attributes the other side adds, keeping one side’s decision attributes (Definition [9.4](sol.md#def-r2-join-sol)). When the two sides’ data share no attribute, it is the Rasso paper’s *partition* [[58](references.md#pratten_2025_relational.algebras.subset.selection.optimisation), Appendix E.2]; the paper’s lifting groups otherwise (Chapter [2](changes.md)).
+
+**solution set.** The data, the decision, and a set of candidates. \[Lean: `Sol`. Racket: `sol`.\]
+
+**structure.** A finite universe of values and, for each relation symbol, a finite list of tuples.
+
+**surface language.** A language for writing a Rasso program, translated to and from rassoAST: $`\rho \alpha`$, .rasso text with the paper’s Greek spellings of its keywords; RassoLean terms, Lean values of type `Rasso.Program`; .rasso text, in ASCII; rassoSQL, in the style of SQL; and rassoInRules, in the style of Datalog and answer set programming.
+
+**term.** It computes a value from a tuple: a value, an attribute, or an operator applied to terms. Terms sit inside expressions: in a selection, an extend, and the characteristic function of an unrestricted relation. \[Lean: `Term`.\]
+
+**total.** An unrestricted relation is total when its term refuses no tuple that fits its heading: on each, it gives `true` or `false`. A term is total on a heading in the same sense.
+
+**tuple.** A function from a set of attributes to values.
+
+**unmixed.** A domain, or a structure’s universe, is unmixed when it does not hold both a float and an exact number, nor both a symbol and a string. On an unmixed domain, `=` is equality of values. \[Lean: `Domain.Unmixed`.\]
+
+**unrestricted relation.** A heading and a Boolean term; possibly infinite. The term is Kanellakis, Kuper and Revesz’s, for whom it is the set of points. Here it is the representation, and the tuples it holds are an unrestricted relation in their sense. \[Lean: `Unrel`. Racket: `unrel`, with operations `ur-…`. Paper: complete domain relation.\]
+
+**well formed.** Said of four things. A finite relation: its heading names no attribute twice, and each tuple fits the heading. An unrestricted relation: its heading names no attribute twice, and its term reads only attributes of the heading. A structure: every entry of every tuple is in the universe. A query: the two sides of each $`\cup`$ and each $`-`$ have the same variables.
+
+**value.** A Boolean, an integer, a non-integer rational, a symbol, a string or a float. \[Lean: `Value`, with constructors `bool`, `int`, `rat`, `symbol`, `string`, `float`.\]
+
+<a id="sec-r2-names"></a>
+## 15.1 Names in Lean and Racket
+
+A name has one root in every layer, written in that layer’s case style: the surface (`.rasso` and rassoAST) in `snake_case`, Racket in `kebab-case`, Lean in `UpperCamel` for types and `lowerCamel` for the rest. So `omega_sol`, `omega-sol` and `omegaSol` are one name. Where a name is a Lean keyword, Lean adds an underscore (`where_`, `renaming_`).
+
+Every other difference is a register split, and there are four kinds.
+
+- The surface names an operator by its symbol’s word, the meta-language by what it does: `sigma`, `pi`, `rho`, `cross` are `select`, `project`, `rename`, `product`. rassoAST’s `"type"` is the kind.
+- Lean abbreviates in the style of its `Finset`: `Finrel`, `Unrel`, `Sol`, `Msol`, `Db`, `Agg`, `Cond`, `inter`, `diff`.
+- Racket prefixes an operation with its type: `fr-` on a finite relation, `ur-` on an unrestricted relation, `t-` on a sequence of tuples. Lean puts it in the type’s namespace.
+- Lean splits or joins some shapes: `omega`, `omegaWhere`, `omegaRows` for Racket’s one `omega`; `nary` for Racket’s forms with two or more operands.
+
+“Kind” alone is the kind of a value. A *node kind* is a rassoAST object’s key, and a *shape kind* is what a position of a Racket form takes.

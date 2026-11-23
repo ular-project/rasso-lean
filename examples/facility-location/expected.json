@@ -1,0 +1,7 @@
+{
+  "kind": "relation",
+  "columns": ["c", "site"],
+  "rows": [["c1", "s2"], ["c2", "s2"], ["c3", "s2"]],
+  "objective": 10,
+  "count": 10
+}

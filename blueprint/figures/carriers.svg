@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- The carriers of Rasso as RassoLean evaluates them, and the operators between them.
+     Drawn by hand; figures/carriers.pdf is made from it for the print build. -->
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="660" viewBox="0 0 1000 660"
+     font-family="DejaVu Sans, Noto Sans Math, sans-serif" font-size="16">
+  <defs>
+    <marker id="up" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2e7d32"/>
+    </marker>
+    <marker id="down" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#c26a00"/>
+    </marker>
+    <marker id="back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2f6690"/>
+    </marker>
+    <style>
+      .box { fill: #ffffff; stroke: #1b1f24; stroke-width: 2.2; }
+      .seq { fill: #ffffff; stroke: #1b1f24; stroke-width: 1.6; }
+      .aux { fill: #ffffff; stroke: #1b1f24; stroke-width: 1.2; }
+      .name { font-size: 19px; text-anchor: middle; fill: #1b1f24; }
+      .ops { font-size: 16px; text-anchor: middle; fill: #1b1f24; }
+      .up { fill: none; stroke: #2e7d32; stroke-width: 1.6; marker-end: url(#up); }
+      .down { fill: none; stroke: #c26a00; stroke-width: 1.6; marker-end: url(#down); }
+      .back { fill: none; stroke: #2f6690; stroke-width: 1.6; marker-end: url(#back); }
+      .lab { font-size: 14px; }
+      .lup { fill: #2e7d32; }
+      .ldown { fill: #c26a00; }
+      .lback { fill: #2f6690; }
+      .leg { font-size: 13px; fill: #1b1f24; }
+    </style>
+  </defs>
+
+  <!-- ===== boxes ===== -->
+  <rect class="box" x="210" y="50" width="240" height="66"/>
+  <text class="name" x="330" y="77">Unrel</text>
+  <text class="ops" x="330" y="103">σ π ρ ⋈ × ∪ ∩ −</text>
+
+  <rect class="aux" x="30" y="168" width="120" height="44"/>
+  <text class="name" x="90" y="197">Domain</text>
+
+  <rect class="box" x="210" y="250" width="240" height="66"/>
+  <text class="name" x="330" y="277">Finrel</text>
+  <text class="ops" x="330" y="303">σ π ρ ⋈ × ∪ ∩ − γ extend</text>
+
+  <rect class="box" x="590" y="250" width="150" height="66"/>
+  <text class="name" x="665" y="277">Sol</text>
+  <text class="ops" x="665" y="303">σ ρ ⋈</text>
+
+  <rect class="box" x="840" y="250" width="130" height="66"/>
+  <text class="name" x="905" y="277">Msol</text>
+  <text class="ops" x="905" y="303">σ</text>
+
+  <rect class="seq" x="250" y="440" width="160" height="62" rx="20"/>
+  <text class="name" x="330" y="466">tseq</text>
+  <text class="ops" x="330" y="490">π</text>
+
+  <rect class="seq" x="600" y="440" width="130" height="62" rx="20"/>
+  <text class="name" x="665" y="477">cseq</text>
+
+  <rect class="seq" x="845" y="440" width="120" height="62" rx="20"/>
+  <text class="name" x="905" y="477">dbseq</text>
+
+  <rect class="aux" x="40" y="440" width="110" height="44"/>
+  <text class="name" x="95" y="469">Db</text>
+
+  <!-- ===== up: ω builds a level ===== -->
+  <path class="up" d="M110,168 C130,110 160,90 208,84"/>
+  <text class="lab lup" x="122" y="118">ω</text>
+  <path class="up" d="M122,212 C150,258 175,268 208,270"/>
+  <text class="lab lup" x="160" y="250">ω</text>
+  <path class="up" d="M450,272 L588,272"/>
+  <text class="lab lup" x="548" y="264">ω<tspan font-size="10" dy="4">sol</tspan></text>
+  <path class="up" d="M450,84 C545,95 615,165 645,248"/>
+  <text class="lab lup" x="585" y="140">ω<tspan font-size="10" dy="4">sol</tspan></text>
+  <path class="up" d="M740,283 L838,283"/>
+  <text class="lab lup" x="766" y="275">ω<tspan font-size="10" dy="4">msol</tspan></text>
+
+  <!-- ===== down: ℰ lists a level as a sequence ===== -->
+  <path class="down" d="M300,316 L300,438"/>
+  <text class="lab ldown" x="282" y="384">ℰ</text>
+  <path class="down" d="M450,100 C545,150 545,375 404,442"/>
+  <text class="lab ldown" x="530" y="395">ℰ</text>
+  <path class="down" d="M665,316 L665,438"/>
+  <text class="lab ldown" x="673" y="384">ℰ<tspan font-size="10" dy="4">sol</tspan></text>
+  <path class="down" d="M905,316 L905,438"/>
+  <text class="lab ldown" x="913" y="384">ℰ<tspan font-size="10" dy="4">msol</tspan></text>
+
+  <!-- ===== back: take a value to another carrier ===== -->
+  <!-- tseq -> finrel : forget -->
+  <path class="back" d="M345,438 L345,318"/>
+  <text class="lab lback" x="352" y="384">forget</text>
+  <!-- finrel -> unrel : lift -->
+  <path class="back" d="M330,250 L330,118"/>
+  <text class="lab lback" x="337" y="190">lift</text>
+  <!-- tseq -> unrel : lift -->
+  <path class="back" d="M378,440 C505,380 500,200 425,118"/>
+  <text class="lab lback" x="440" y="185">lift</text>
+  <!-- finrel -> Domain : in -->
+  <path class="back" d="M210,300 C150,300 95,270 85,214"/>
+  <text class="lab lback" x="104" y="294">in</text>
+  <!-- cseq -> tseq : flatten -->
+  <path class="back" d="M600,471 L412,471"/>
+  <text class="lab lback" x="478" y="462">flatten</text>
+  <!-- dbseq -> db : flatten_msol -->
+  <path class="back" d="M905,502 L905,610 Q905,622 893,622 L107,622 Q95,622 95,610 L95,486"/>
+  <text class="lab lback" x="500" y="614">flatten<tspan font-size="10" dy="4">msol</tspan></text>
+  <!-- db -> finrel : db_ref -->
+  <path class="back" d="M120,440 C150,380 190,340 226,318"/>
+  <text class="lab lback" x="168" y="398">db_ref</text>
+
+  <!-- ===== legend ===== -->
+  <g transform="translate(660,40)">
+    <rect x="0" y="0" width="320" height="86" fill="#ffffff" stroke="#9aa1a8" stroke-width="1"/>
+    <path class="up" d="M14,22 L54,22"/>
+    <text class="leg" x="64" y="27">ω: builds a level</text>
+    <path class="down" d="M14,46 L54,46"/>
+    <text class="leg" x="64" y="51">ℰ: lists a level as a sequence</text>
+    <path class="back" d="M14,70 L54,70"/>
+    <text class="leg" x="64" y="75">takes a value to another</text>
+  </g>
+</svg>

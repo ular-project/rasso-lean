@@ -1,0 +1,448 @@
+{
+  "program": [
+    {
+      "define": {
+        "expr": {
+          "omega": {
+            "heading": [
+              {
+                "column": {
+                  "attr": "cake",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              },
+              {
+                "column": {
+                  "attr": "price",
+                  "domain": {
+                    "type": "int"
+                  }
+                }
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "symbol": "Banana"
+                },
+                {
+                  "int": 400
+                }
+              ],
+              [
+                {
+                  "symbol": "Chocolate"
+                },
+                {
+                  "int": 450
+                }
+              ]
+            ]
+          }
+        },
+        "line": 1,
+        "name": "Cakes"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "omega": {
+            "heading": [
+              {
+                "column": {
+                  "attr": "cake",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              },
+              {
+                "column": {
+                  "attr": "ingredient",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              },
+              {
+                "column": {
+                  "attr": "amount",
+                  "domain": {
+                    "type": "int"
+                  }
+                }
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "symbol": "Banana"
+                },
+                {
+                  "symbol": "Banana"
+                },
+                {
+                  "int": 2
+                }
+              ],
+              [
+                {
+                  "symbol": "Banana"
+                },
+                {
+                  "symbol": "Sugar"
+                },
+                {
+                  "int": 75
+                }
+              ],
+              [
+                {
+                  "symbol": "Banana"
+                },
+                {
+                  "symbol": "Flour"
+                },
+                {
+                  "int": 250
+                }
+              ],
+              [
+                {
+                  "symbol": "Banana"
+                },
+                {
+                  "symbol": "Butter"
+                },
+                {
+                  "int": 100
+                }
+              ],
+              [
+                {
+                  "symbol": "Chocolate"
+                },
+                {
+                  "symbol": "Cocoa"
+                },
+                {
+                  "int": 75
+                }
+              ],
+              [
+                {
+                  "symbol": "Chocolate"
+                },
+                {
+                  "symbol": "Sugar"
+                },
+                {
+                  "int": 150
+                }
+              ],
+              [
+                {
+                  "symbol": "Chocolate"
+                },
+                {
+                  "symbol": "Flour"
+                },
+                {
+                  "int": 200
+                }
+              ],
+              [
+                {
+                  "symbol": "Chocolate"
+                },
+                {
+                  "symbol": "Butter"
+                },
+                {
+                  "int": 150
+                }
+              ]
+            ]
+          }
+        },
+        "line": 2,
+        "name": "Recipe"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "omega": {
+            "heading": [
+              {
+                "column": {
+                  "attr": "ingredient",
+                  "domain": {
+                    "type": "symbol"
+                  }
+                }
+              },
+              {
+                "column": {
+                  "attr": "avail",
+                  "domain": {
+                    "type": "int"
+                  }
+                }
+              }
+            ],
+            "rows": [
+              [
+                {
+                  "symbol": "Banana"
+                },
+                {
+                  "int": 6
+                }
+              ],
+              [
+                {
+                  "symbol": "Cocoa"
+                },
+                {
+                  "int": 500
+                }
+              ],
+              [
+                {
+                  "symbol": "Flour"
+                },
+                {
+                  "int": 4000
+                }
+              ],
+              [
+                {
+                  "symbol": "Butter"
+                },
+                {
+                  "int": 500
+                }
+              ],
+              [
+                {
+                  "symbol": "Sugar"
+                },
+                {
+                  "int": 2000
+                }
+              ]
+            ]
+          }
+        },
+        "line": 3,
+        "name": "Inventory"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "omega": {
+            "heading": [
+              {
+                "column": {
+                  "attr": "qty",
+                  "domain": {
+                    "range": {
+                      "hi": 100,
+                      "lo": 0
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "line": 4,
+        "name": "Qty"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "omega_sol": {
+            "data": {
+              "name": "Cakes"
+            },
+            "decision": {
+              "name": "Qty"
+            }
+          }
+        },
+        "line": 5,
+        "name": "B"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "sigma_sol": {
+            "condition": {
+              "gamma": {
+                "aggregate": {
+                  "agg": {
+                    "of": {
+                      "attr": "ret"
+                    },
+                    "op": "bool_and"
+                  }
+                },
+                "as": "ret",
+                "by": [],
+                "of": {
+                  "gamma": {
+                    "aggregate": {
+                      "call": {
+                        "args": [
+                          {
+                            "agg": {
+                              "of": {
+                                "call": {
+                                  "args": [
+                                    {
+                                      "attr": "qty"
+                                    },
+                                    {
+                                      "attr": "amount"
+                                    }
+                                  ],
+                                  "op": "*"
+                                }
+                              },
+                              "op": "sum"
+                            }
+                          },
+                          {
+                            "attr": "avail"
+                          }
+                        ],
+                        "op": "<="
+                      }
+                    },
+                    "as": "ret",
+                    "by": [
+                      "ingredient",
+                      "avail"
+                    ],
+                    "of": {
+                      "join": {
+                        "operands": [
+                          {
+                            "name": "B"
+                          },
+                          {
+                            "name": "Recipe"
+                          },
+                          {
+                            "name": "Inventory"
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "of": {
+              "name": "B"
+            }
+          }
+        },
+        "line": 6,
+        "name": "MakableBatches"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "enum_sol": {
+            "count": {
+              "int": 1
+            },
+            "key": {
+              "gamma": {
+                "aggregate": {
+                  "agg": {
+                    "of": {
+                      "call": {
+                        "args": [
+                          {
+                            "attr": "qty"
+                          },
+                          {
+                            "attr": "price"
+                          }
+                        ],
+                        "op": "*"
+                      }
+                    },
+                    "op": "sum"
+                  }
+                },
+                "by": [],
+                "of": {
+                  "name": "MakableBatches"
+                }
+              }
+            },
+            "of": {
+              "name": "MakableBatches"
+            },
+            "order": "desc"
+          }
+        },
+        "line": 12,
+        "name": "ProfitableBatch"
+      }
+    },
+    {
+      "define": {
+        "expr": {
+          "pi": {
+            "attrs": [
+              "cake",
+              "price",
+              "qty"
+            ],
+            "of": {
+              "enum": {
+                "count": {
+                  "all": {}
+                },
+                "key": {
+                  "attr": "cake"
+                },
+                "of": {
+                  "forget": {
+                    "of": {
+                      "flatten": {
+                        "of": {
+                          "name": "ProfitableBatch"
+                        },
+                        "rank": {
+                          "none": {}
+                        }
+                      }
+                    }
+                  }
+                },
+                "order": "asc"
+              }
+            }
+          }
+        },
+        "line": 15,
+        "name": "LetsMakeBatch"
+      }
+    }
+  ],
+  "rasso": "1"
+}
