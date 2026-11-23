@@ -2,9 +2,11 @@
 
 David R. Pratten (<David.R.Pratten@student.uts.edu.au>), Luke Mathieson (<Luke.Mathieson@uts.edu.au>)
 
-Draft v0.1.3, 23 November 2026.
+Draft v0.1.4, 23 November 2026.
 
 Source: <https://github.com/ular-project/rasso-lean>
+
+DOI: [10.5281/zenodo.24461259](https://doi.org/10.5281/zenodo.24461259)
 
 **[The report as a PDF](rasso-lean.pdf)**, the citable form. This Markdown version is generated from the same source, for reading in this repository, with each Lean name a link to its definition.
 
